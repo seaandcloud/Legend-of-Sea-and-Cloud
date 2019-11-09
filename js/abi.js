@@ -60,6 +60,32 @@ var abi = [
 		"inputs": [
 			{
 				"internalType": "address payable",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_balance",
+				"type": "uint256"
+			}
+		],
+		"name": "cashOut",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address payable",
 				"name": "newOwner",
 				"type": "address"
 			}
@@ -700,6 +726,21 @@ var abi = [
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
 		"name": "getOwnSon",
 		"outputs": [
 			{
@@ -1080,4 +1121,4 @@ var abi = [
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]
