@@ -584,7 +584,7 @@
 					});
 				},
 				withdraw(){
-					Contract.withdraw((err,res)=>{
+					Contract.signIn((err,res)=>{
 						if(!err){
 							alertify.success(this.lang("withdraw_success"));
 						}else{
