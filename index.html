@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -605,9 +605,9 @@
 					if((this.userInfo).length < 10){
 						return 0;
 					}
-					var lastTime = this.userInfo[11].toNumber();
+					var lastTime = this.userInfo[11].toNumber() ;
 					//获取预计时间
-					var pauseTime = 24;
+					var pauseTime = 24  * 3600;
 
 					var timeData = "";
 
@@ -691,7 +691,7 @@
 
 			//实例化合约地址
 			const contractAbi = abi;
-			const contractAddress = "0x9b476424A385d0E3938059419fCf8825b28a3Bbe";
+			const contractAddress = "0xf11e261CCdBfA6558729Ed8CecD7De4C0c12B57c";
 			const myContract = Contract = web3.eth.contract(contractAbi).at(contractAddress);
 
 			//获取合约创建时间
