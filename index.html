@@ -1,0 +1,844 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/alertify.default.min.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+	<div class="colorlib-loader"></div>
+
+	<div id="page" >
+		<nav class="colorlib-nav" role="navigation">
+			<div class="top-menu">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-2">
+							<div id="colorlib-logo"><a href="index.html">{{ lang('name') }}</a></div>
+						</div>
+						<div class="col-md-10 text-right menu-1">
+							<ul>
+								<li @click="changeLanguageType(0)" :class="langType == 0 ? 'active' : '' "><a href="javascript:app.changeLanguageType(0);">English</a></li>
+								<!-- <li @click="changeLanguageType(1)" :class="langType == 1 ? 'active' : '' "><a href="javascript:;">한국어</a></li>
+								<li @click="changeLanguageType(2)" :class="langType == 2 ? 'active' : '' "><a href="javascript:;">日本語</a></li>
+								<li @click="changeLanguageType(3)" :class="langType == 3 ? 'active' : '' "><a href="javascript:;">Россия</a></li> -->
+								<li @click="changeLanguageType(4)" :class="langType == 4 ? 'active' : '' "><a href="javascript:app.changeLanguageType(4);">新加坡</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<section id="home" class="video-hero" style="height: 700px; background-image: url(images/cover_img_1.jpg);  background-size:cover; background-position: center center;background-attachment:fixed;" data-section="home">
+		<div class="overlay"></div>
+			<div class="display-t text-center">
+				<div class="display-tc">
+					<div class="container">
+						<div class="col-md-12 col-md-offset-0">
+							<div class="animate-box">
+								<h2>{{ lang('name') }}</h2>
+								<p>{{ lang('starting_at') }} {{ createTime }}</p>
+								<p><a href="#beginPlay" class="btn btn-primary btn-lg btn-custom">{{ lang('start_a_journey_of_legend') }}</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="colorlib-services colorlib-bg-white" id="beginPlay">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 text-center animate-box">
+						<div class="services">
+							<span class="icon">
+								<i class="icon-browser"></i>
+							</span>
+							<div class="desc" id="smallArea"> 
+								<h3>Sea</h3>
+								<p>{{ lang('small_area_tip_1') }}{{ areaData[5] }}{{ lang('small_area_tip_2') }} </p>
+								<p style="color: #798eea;">{{ lang('countdown_to_the_prize') }}：{{ nextSmallAreaOpenTime }} {{ nextSmallAreaOpenTimeText }}</p>
+								<p style="color: #798eea;">{{ lang('total_amount_of_prize_pool') }}：{{ areaData[3] }} ETH</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 text-center animate-box">
+						<div class="services">
+							<span class="icon">
+								<i class="icon-download"></i>
+							</span>
+							<div class="desc" id="bigArea">
+								<h3>Cloud</h3>
+								<p>{{ lang('big_area_tip_1') }}{{ areaData[4] }}{{ lang('big_area_tip_2') }}</p>
+								<p style="color: #798eea;">{{ lang('countdown_to_the_prize') }} {{ nextBigAreaOpenTime }} {{ nextBigAreaOpenTimeText }}</p>
+								<p style="color: #798eea;">{{ lang('total_amount_of_prize_pool') }}{{ areaData[2] }} ETH</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url(images/cover_img_1.jpg);" data-stellar-background-ratio="0.5" v-if="allowBingParent">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-center colorlib-heading animate-box">
+						<h2>{{ lang('bind_parent') }}</h2>
+						<p>{{  lang('my_parent') }}：{{ parentAddress }}</p>
+					</div>
+				</div>
+				<div class="row animate-box">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="row">
+							<div class="col-md-12">
+								<form class="form-inline qbstp-header-subscribe">
+									<div class="col-three-forth">
+										<div class="form-group">
+											<input type="text" class="form-control" id="email" :disabled="!allowBingParent" v-model="parentAddress" :placeholder="lang('please_enter_the_address_of_the_recommend')">
+										</div>
+									</div>
+									<div class="col-one-third">
+										<div class="form-group">
+											<button type="button" class="btn btn-primary" :disabled="!allowBingParent" @click="bingParent">{{ lang('bind_immediately') }}</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url(images/cover_img_1.jpg);" data-stellar-background-ratio="0.5" v-else >
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-center colorlib-heading animate-box">
+						<h2>{{ lang('invite_friends') }}</h2>
+						<p>{{ lang('invitation_link') }}：{{ shareUrl }}</p>
+					</div>
+				</div>
+				<div class="row animate-box">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="row">
+							<div class="col-md-12">
+								<form class="form-inline qbstp-header-subscribe">
+									<div class="col-three-forth">
+										<div class="form-group">
+											<input type="text" class="form-control" readonly id="email" :disabled="allowBingParent" v-model="shareUrl">
+										</div>
+									</div>
+									<div class="col-one-third">
+										<div class="form-group">
+											<button type="button" class="btn btn-primary" id="copy" :disabled="allowBingParent" data-clipboard-action="copy" data-clipboard-target="#email" >{{ lang('invite_friends') }}</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="colorlib-blog" style="padding-bottom: 0">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+							<h2>{{ lang('immediate_participation') }}</h2>
+							<p>{{ lang('investment_statement') }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 animate-box">
+							<article>
+								<h2>{{ lang('play') }}</h2>
+								<p class="admin"><span>{{ lang('burning_ratio') }} 1 ETH = {{ useTokenScale }} {{ tokenName }} ({{ lang('available') }}：{{ tokenNum }})</span></p>
+								<p>
+									<div class="input-group">
+										<input type="text" class="form-control"  placeholder="1.00" v-model="investmentBalance">
+										<div class="input-group-addon" style="border:1px solid #f0f0f0;">ETH</div>
+									</div>
+								</p>
+								<p class="text-center">
+									<button class="btn btn-default" type="button" v-for="i in investmentList" @click="changeInvestmentValue(i.value)">{{ i.value }} ETH</button>
+								</p>
+								<p style="display: flex; justify-content: center;">
+									<button class="btn btn-block btn-primary"  style="width: 50%;" type="button" @click="play()">{{ lang('send') }}ETH</button>
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4 animate-box">
+							<article>
+								<h2>{{ lang('buying_tickets') }}</h2>
+								<p class="admin"><span>{{ lang('purchase_admission_tickets') }} 1 ETH = {{ ((1 / tokenPrice) * 100000).toFixed(0) }} {{ tokenName }}</span></p>
+								<p>
+									<div class="input-group">
+										<input type="text" class="form-control"  placeholder="1.00" v-model="exchangeBalanceEth">
+										<div class="input-group-addon" style="border:1px solid #f0f0f0;"> {{ exchangeBalanceToken }} {{ tokenName }}</div>
+									</div>
+								</p>
+								<p class="text-center">
+									<button class="btn btn-default" type="button" v-for="e in exchangeList" @click="changeExchangeValue(e.value)">{{ e.value }} ETH</button>
+								</p>
+								<p style="display: flex; justify-content: center;">
+									<button class="btn btn-block btn-primary"  style="width: 50%;" type="button" @click="buyToken()">{{ lang('purchase') }}</button>
+								</p>
+							</article>
+						</div>
+						<div class="col-md-4 animate-box play-rule">
+							<article style="overflow-y: scroll;">
+								<h2>{{ lang('play_rule') }}</h2>
+								<p class="admin"><span> <span style="color: gold;margin-right:5px">★</span> {{ lang('rule_2') }}</span></p>
+								<p class="admin"><span> <span style="color: gold;margin-right:5px">★</span> {{ lang('rule_3') }}</span></p>
+								<p class="admin"><span> <span style="color: gold;margin-right:5px">★</span> {{ lang('rule_4') }}</span></p>
+								<p class="admin"><span> <span style="color: gold;margin-right:5px">★</span> {{ lang('rule_5') }}</span></p>
+								<p class="admin"><span> <span style="color: gold;margin-right:5px">★</span> {{ lang('rule_6') }}</span></p>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<div id="colorlib-counter" class="colorlib-counters" style="background-image: url(images/cover_img_1.jpg);" data-stellar-background-ratio="0.5" v-if="false">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-4 col-sm-4 text-center animate-box">
+							<div class="counter-entry">
+								<span class="icon"><i class="flaticon-ribbon"></i></span>
+								<div class="desc">
+									<span class="colorlib-counter js-counter" data-from="0" data-to="10" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="colorlib-counter-label">系统已平稳运行 10 天</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 text-center animate-box">
+							<div class="counter-entry">
+								<span class="icon"><i class="flaticon-church"></i></span>
+								<div class="desc">
+									<span class="colorlib-counter js-counter" data-from="143265" data-to="150000" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="colorlib-counter-label">累计已经有 150000 人参与</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 text-center animate-box">
+							<div class="counter-entry">
+								<span class="icon"><i class="flaticon-dove"></i></span>
+								<div class="desc">
+									<span class="colorlib-counter js-counter" data-from="0" data-to="1532.5478" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="colorlib-counter-label">用户累计总收益 1532.5478 ETH</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="colorlib-pricing">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+						<h2>{{ lang('data_statistics') }}</h2>
+						<p>Statistics</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 text-center animate-box">
+						<div class="pricing">
+
+							<h2 class="pricing-heading">{{ lang('my_income') }}</h2>
+							<div class="space-between-content">
+								<div>{{ lang('settled_dividend_income') }}</div>
+								<div>{{ outBalance }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('recommended_award') }}</div>
+								<div>{{ shareBalance }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('bonus_pool_revenue') }}</div>
+								<div>{{ bonusProfitNum  }} ETH</div>
+							</div>
+							<div class="space-between-content" id="lastTimeArea">
+								<div>{{ lang('time_difference_of_next_dividend_income') }}</div>
+								<div>{{ nextTime }}{{ nextTimeText }} <a href="javascript:;" @click="signIn()">{{ lang('settlement') }}</a></div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ getOutScale }}{{ outScale.toFixed(1) }}{{ lang('times_the_movement_is_not_good') }}</div>
+								<div>{{ getOutBalanceCut }} ETH</div>
+							</div>
+<!--							<div class="space-between-content">-->
+<!--								<div>未結算預計收益</div>-->
+<!--								<div>0.000 ~ 0.000 ETH <a href="">結算</a></div>-->
+<!--							</div>-->
+							<div class="space-between-content">
+								<div>{{ lang('my_performance_gains') }}</div>
+								<div>{{ shareBalance }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('quantity_of_undelivered_currency') }}</div>
+								<div>{{ waitWithdraw }} ETH <a href="JavaScript:;" @click="withdraw()">{{ lang('withdraw_money') }}</a> </div>
+							</div>
+								
+						</div>
+					</div>
+					<div class="col-md-4 text-center animate-box">
+						<div class="pricing">
+							<h2 class="pricing-heading">{{ lang('statistics') }}</h2>
+							<div class="space-between-content">
+								<div>{{ lang('current_total_amount_of_grand_prize_pool') }}</div>
+								<div>{{ systemInfo[0] }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('current_total_amount_of_small_prize_pool') }}</div>
+								<div>{{ systemInfo[1] }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('ticket_burn_rate') }}</div>
+								<div>{{ systemInfo[3] }}</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('tickets_burned') }}</div>
+								<div>{{ systemInfo[2] }} {{ tokenName }}</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('total_funds_invested') }}</div>
+								<div>{{ systemInfo[4] }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('total_settled_dividend_income') }}</div>
+								<div>{{ systemInfo[5] }} ETH</div>
+							</div>
+							<div class="space-between-content">
+								<div>{{ lang('total_recommended_revenue') }}</div>
+								<div>{{ systemInfo[6] }} ETH</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 text-center animate-box">
+						<div class="pricing">
+							<h2 class="pricing-heading">{{ lang('record') }}</h2>
+							<div style="height:25px"></div>
+							<p style="display: flex; justify-content: center;">
+								<button class="btn btn-block btn-primary"  style="width: 50%;" type="button" data-toggle="modal" data-target="#myModal" >{{ lang('investment_record') }}</button>
+							</p>
+							<p style="display: flex; justify-content: center;">
+								<button class="btn btn-block btn-primary"  style="width: 50%;" type="button" data-toggle="modal" data-target="#myModal1" >{{ lang('withdrawals_record') }}</button>
+							</p>
+							<p style="display: flex; justify-content: center;">
+								<button class="btn btn-block btn-primary"  style="width: 50%;" type="button" data-toggle="modal" data-target="#myModal2" >{{ lang('my_sharing') }}</button>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <h4 class="modal-title" id="myModalLabel">{{ lang('investment_record') }}</h4>
+				</div>
+				<div class="modal-body">
+				  <table class="table table-condensed table-responsive table-striped">
+					<tr>
+						<td> {{ lang('investment_amount') }} </td>
+						<td> {{ lang('consumption_tickets') }} </td>
+						<td> {{ lang('investment_time') }} </td>
+					</tr>
+					  <tr v-for="v in inList">
+						  <td> {{ v[1] }} ETH</td>
+						  <td>{{ v[2] }} {{ tokenName }}</td>
+						  <td>{{ v[0] }}</td>
+					  </tr>
+				  </table>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+		  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <h4 class="modal-title" id="myModalLabel">{{ lang('withdrawals_record') }}</h4>
+				</div>
+				<div class="modal-body">
+				  <table class="table table-condensed table-responsive table-striped">
+					<tr>
+						<td> {{ lang('cash_withdrawal_amount') }} </td>
+						<td> {{ lang('cash_withdrawal_time') }} </td>
+					</tr>
+					  <tr v-for="v in outList">
+						  <td> {{ v[1] }} ETH</td>
+						  <td>{{ v[0] }}</td>
+					  </tr>
+				  </table>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">{{ lang('my_sharing') }}</h4>
+				  </div>
+				  <div class="modal-body">
+					<table class="table table-condensed table-responsive table-striped">
+						<tr v-for="(v,index) in teamList">
+							<td> {{ index+1 }}. {{ hideAddress(v) }}</td>
+						</tr>
+					</table>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+
+	</div>
+
+
+	
+
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Stellar Parallax -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- YTPlayer -->
+	<script src="js/jquery.mb.YTPlayer.min.js"></script>
+	<!-- Owl carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Counters -->
+	<script src="js/jquery.countTo.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
+	<!-- VUE -->
+	<script src="js/vue.js"></script>
+	<!-- Clipboard -->
+	<script src="js/clipboard.min.js"></script>
+	<!--alertify-->
+	<script src="js/alertify.min.js"></script>
+
+	<script src="js/jquery.countdown.js"></script>
+
+	<!-- Lang -->
+	<script src="js/lang.js"></script>
+	<script src="js/time.js"></script>
+	<script src="js/abi.js"></script>
+
+	<script>
+		var app = new Vue({
+			el:"#page",
+			data:{
+				langType:0,
+				myAddress:"",
+				ethBalance:0,
+				createTime:"", //合约创建时间
+				parentAddress:"",  //推荐人
+				allowBingParent:false,
+				shareUrl:"",
+				userInfo:[],
+				tokenName:"",  //门票名称
+				tokenPrice:1,  //门票价格
+				investmentBalance:"", //投资金额
+				exchangeBalanceEth:"", //兑换门票金额
+				tokenNum:0, //门票余额
+				useTokenScale:0, //门票使用比例
+				shareBalance:0, //分享奖励
+				bonusProfitNum:0,  //收益奖励
+				outBalance:0,  //总提现金额
+				outScale:1,//出局倍数
+				nextTimeText:"",
+				investmentList:[
+					{value:1},
+					{value:11},
+					{value:31},
+				],
+				exchangeList:[
+					{value:1},
+					{value:3},
+					{value:5},
+				],
+				areaData:[],
+				nextBigAreaOpenTimeText:"-",
+				nextSmallAreaOpenTimeText:"-",
+				systemInfo:[],
+				inList:[],
+				outList:[],
+				teamList:[],
+			},
+			methods:{
+				lang(name){
+					return lang[this.langType][name];
+				},
+				changeLanguageType(e){
+					this.langType = e;
+				},
+				bingParent:function(){
+					//开始绑定
+					Contract.reg(this.parentAddress,(err,res)=>{
+						if(!err){
+							alertify.success(this.lang("bind_success"));
+							window.location.reload();
+						}else{
+							alertify.error(this.lang("bind_error"));
+						}
+					});
+				},
+				changeInvestmentValue:function(e){
+					this.investmentBalance = e;
+				},
+				changeExchangeValue:function(e){
+					this.exchangeBalanceEth = e;
+				},
+				buyToken(){
+					_needEth = _web3.toWei(this.exchangeBalanceEth);
+					if(this.ethBalance < _needEth){
+						alertify.error(this.lang("balance_not_enough"));
+					}else{
+						Contract.buy({value:_needEth},(err,res)=>{
+							if(!err){
+								alertify.success(res);
+							}else{
+								alertify.error(this.lang("buy_error"));
+							}
+						});
+					}
+				},
+				play(){
+					Contract.play({value:web3.toWei(this.investmentBalance)},(err,res)=>{
+						if(!err){
+							console.log(res);
+						}else{
+							alertify.error(this.lang("investment_error"));
+						}
+					});
+				},
+				signIn(){
+					Contract.signIn((err,res)=>{
+						if(!err){
+							alertify.success(this.lang("sign_in_success"));
+						}else{
+							alertify.error(this.lang("sign_in_error"));
+						}
+					});
+				},
+				withdraw(){
+					Contract.withdraw((err,res)=>{
+						if(!err){
+							alertify.success(this.lang("withdraw_success"));
+						}else{
+							alertify.error(this.lang("withdraw_error"));
+						}
+					})
+				},
+				hideAddress(str){
+					return str.substring(0,10) + "..." + str.substring(str.length-20)
+				}
+			},
+			computed:{
+				exchangeBalanceToken(){
+					return (1 / (this.tokenPrice / 100000) * this.exchangeBalanceEth).toFixed(0);
+				},
+				nextTime(){
+					//获取上次时间
+					if((this.userInfo).length < 10){
+						return 0;
+					}
+					var lastTime = this.userInfo[11].toNumber();
+					//获取预计时间
+					var pauseTime = 24;
+
+					var timeData = "";
+
+					$("#lastTimeArea").countdown(time(lastTime + pauseTime,19,"/"), function(event) {
+						app.nextTimeText =  event.strftime('%D D %H:%M:%S');
+					});
+				},
+				nextBigAreaOpenTime(){
+					if((this.areaData).length < 1){
+						return 0;
+					}
+					var lastTime = this.areaData[0].toNumber();
+					var pauseTime = this.areaData[4].toNumber() * 3600;
+
+					$("#bigArea").countdown(time(lastTime + pauseTime,19,"/"), function(event) {
+						app.nextBigAreaOpenTimeText =  event.strftime('%H:%M:%S');
+					});
+				},
+				nextSmallAreaOpenTime(){
+					if((this.areaData).length < 1){
+						return 0;
+					}
+					var lastTime = this.areaData[1].toNumber();
+					var pauseTime = this.areaData[5].toNumber() * 3600;
+
+					$("#smallArea").countdown(time(lastTime + pauseTime,19,"/"), function(event) {
+						app.nextSmallAreaOpenTimeText =  event.strftime('%H:%M:%S');
+					});
+				},
+				getOutScale(){
+					//获取出局倍数
+					setTimeout(function(){
+						Contract.outScale(app.userInfo[7],(err,res)=>{
+							if(!err){
+								app.outScale = res.toNumber();
+							}
+						});
+					},3000)
+				},
+				getOutBalanceCut(){
+					if((this.userInfo).length < 10){
+						return 0;
+					}
+
+					//获取投资金额
+					var inBalance = (this.userInfo[4]).toNumber();
+					//获取出局倍数
+					var outScale = this.outScale;
+					//获取收益数
+					var bonusProfitNum = (this.userInfo['5']).toNumber();
+					var num = web3.fromWei((inBalance * outScale) - bonusProfitNum);
+					if(num < 0){
+						num = 0;
+					}
+					return num;
+				},
+				waitWithdraw(){
+					if((this.userInfo).length < 10){
+						return "-";
+					}else{
+						return web3.fromWei((this.userInfo[5]).toNumber() + (this.userInfo[8]).toNumber() - (this.userInfo[6]).toNumber());
+					}
+				}
+			}
+		});
+	</script>
+
+	<script>
+
+		var Contract;
+		var _web3;
+		
+		window.ethereum.enable().then((address,err)=>{
+			_web3 = web3;
+			app.myAddress = address[0];
+			web3.eth.getBalance(app.myAddress,(err,res)=>{
+
+				alertify.log(web3.fromWei(res).toNumber() + " ETH");
+				app.ethBalance = res.toNumber();
+			});
+
+			//实例化合约地址
+			const contractAbi = abi;
+			const contractAddress = "0x9b476424A385d0E3938059419fCf8825b28a3Bbe";
+			const myContract = Contract = web3.eth.contract(contractAbi).at(contractAddress);
+
+			//获取合约创建时间
+			myContract.createTime((err,res)=>{
+				app.createTime = time(res.toNumber(),10,'.');
+			});
+
+
+			//获取个人信息
+			myContract.allPlayerList(app.myAddress,(err,res)=>{
+				if(!err){
+					app.userInfo = res;
+					app.shareBalance = web3.fromWei(res[8]).toNumber();
+					app.bonusProfitNum = web3.fromWei(res[5]).toNumber();
+					app.outBalance = web3.fromWei(res[6]).toNumber();
+
+					if(res[1] == "0x0000000000000000000000000000000000000000"){
+						//没有注册，可以绑定推荐人
+						//获取推荐人
+						var parentAddress = getQueryVariable("address");
+
+						if(false === parentAddress){
+							parentAddress = "";
+						}
+
+						app.allowBingParent = true;
+						app.parentAddress = parentAddress;
+					}else{
+						app.allowBingParent = false;
+						app.parentAddress = res[2];
+						app.shareUrl = window.location.protocol+"//"+window.location.host + window.location.pathname + "?address=" + res[1];
+					}
+				}
+			});
+
+			//获取门票名称
+			myContract.symbol((err,res)=>{
+				if(!err){
+					app.tokenName = res;
+				}
+			});
+
+			//获取门票价格
+			myContract.price((err,res)=>{
+				if(!err){
+					app.tokenPrice = res.toNumber();
+				}
+			});
+
+			//获取门票余额
+			myContract.balanceOf(app.myAddress,{value:0},(err,res)=>{
+				if(!err){
+					app.tokenNum = web3.fromWei(res).toNumber().toFixed(2);
+				}
+			});
+
+			//获取门票燃烧比例
+			myContract.tokenUseScale((err,res)=>{
+				if(!err){
+					app.useTokenScale = res;
+				}
+			});
+
+			//获取奖池信息
+			myContract.getAreaData((err,res)=>{
+				if(!err){
+					app.areaData = res;
+
+					app.areaData[2] = web3.fromWei(res[2]).toNumber();
+					app.areaData[3] = web3.fromWei(res[3]).toNumber();
+				}
+			})
+
+			//获取系统信息
+			myContract.getSystemInfo((err,res)=>{
+				if(!err){
+					app.systemInfo[0] = web3.fromWei(res[0]).toNumber();
+					app.systemInfo[1] = web3.fromWei(res[1]).toNumber();
+					app.systemInfo[2] = web3.fromWei(res[2]).toNumber();
+					app.systemInfo[3] = res[3].toNumber();
+					app.systemInfo[4] = web3.fromWei(res[4]).toNumber();
+					app.systemInfo[5] = web3.fromWei(res[5]).toNumber();
+					app.systemInfo[6] = web3.fromWei(res[6]).toNumber();
+				}
+			});
+
+			//获取投资信息
+			myContract.getUserInList(app.myAddress,(err,res)=>{
+				if(!err){
+					var tempArr = new Array;
+					for(i=0;i<res.length;i++){
+						for(j=0;j<res[i].length;j++){
+							if(!tempArr[j]){
+								tempArr[j] = new Array;
+							}
+							if(i>0){
+								tempArr[j][i] = web3.fromWei(res[i][j]).toNumber();
+							}else{
+								tempArr[j][i] = time(res[i][j].toNumber(),10);
+							}
+						}
+					}
+					app.inList = tempArr;
+				}
+			});
+
+			//获取提现记录
+			myContract.getUserOutList(app.myAddress,(err,res)=>{
+				if(!err){
+					var tempArr = new Array;
+					for(i=0;i<res.length;i++){
+						for(j=0;j<res[i].length;j++){
+							if(!tempArr[j]){
+								tempArr[j] = new Array;
+							}
+							if(i>0){
+								tempArr[j][i] = web3.fromWei(res[i][j]).toNumber();
+							}else{
+								tempArr[j][i] = time(res[i][j].toNumber(),10);
+							}
+						}
+					}
+					app.outList = tempArr;
+				}
+			});
+
+			//获取推荐记录
+			myContract.getOwnSon((err,res)=>{
+				if(!err){
+					app.teamList = res;
+				}
+			});
+
+		});
+
+	</script>
+
+	<script>
+		var clipboard = new Clipboard('#copy');
+        clipboard.on('success', function(e) {
+            alertify.success(app.lang("copy_success"));
+        });
+        clipboard.on('error', function(e) {
+            alertify.error(app.lang("copy_error"));
+        }); 
+	</script>
+
+	</body>
+</html>
+
