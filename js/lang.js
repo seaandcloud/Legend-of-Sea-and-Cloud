@@ -70,6 +70,15 @@ var lang = [
         "cash_withdrawal_amount":"to raise cash amount",
         "cash_withdrawal_time":"Cash time",
         "place_bind":"place bind parent",
+
+
+        "address_error":"Address error",
+        "network_error":"Please install the Huobi Wallet or imtoken wallet",
+        "gt_0_01":"Must be greater than 0.01",
+        "ticker_gt_100":"The number of tickets must be greater than 100",
+        "withdraw_balance_gt_0_01":"Withdrawal amount must be greater than 0.01",
+        "investment_success":"investment success",
+
     },
     {
         "name":"韩语",
@@ -162,11 +171,11 @@ var lang = [
 
 
 
-        "address_error":"地址错误",
-        "network_error":"请安装火币钱包或imToken钱包",
-        "gt_0_01":"必须大于0.01",
-        "ticker_gt_100":"门票数量必须大于100",
-        "withdraw_balance_gt_0_01":"提币金额必须大于0.01",
-        "investment_success":"投资成功",
+        "address_error":"地址錯誤",
+        "network_error":"請安裝火幣錢包或imToken錢包",
+        "gt_0_01":"必須大於0.01",
+        "ticker_gt_100":"門票數量必須大於100",
+        "withdraw_balance_gt_0_01":"提幣金額必須大於0.01",
+        "investment_success":"投資成功",
     }
 ];
