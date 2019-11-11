@@ -108,7 +108,7 @@
 		</div>
 
 		
-		<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url(images/cover_img_1.jpg);" data-stellar-background-ratio="0.5" v-if="allowBingParent">
+		<div id="colorlib-subscribe" class="colorlib-subscribe" style="background-image: url(images/cover_img_1.jpg);" data-stellar-background-ratio="0.5" v-if="allowBindParent">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">
@@ -124,12 +124,12 @@
 								<form class="form-inline qbstp-header-subscribe">
 									<div class="col-three-forth">
 										<div class="form-group">
-											<input type="text" class="form-control" id="email" :disabled="!allowBingParent" v-model="parentAddress" :placeholder="lang('please_enter_the_address_of_the_recommend')">
+											<input type="text" class="form-control" id="email" :disabled="!allowBindParent" v-model="parentAddress" :placeholder="lang('please_enter_the_address_of_the_recommend')">
 										</div>
 									</div>
 									<div class="col-one-third">
 										<div class="form-group">
-											<button type="button" class="btn btn-primary" :disabled="!allowBingParent" @click="bingParent">{{ lang('bind_immediately') }}</button>
+											<button type="button" class="btn btn-primary" :disabled="!allowBindParent" @click="bindParent">{{ lang('bind_immediately') }}</button>
 										</div>
 									</div>
 								</form>
@@ -157,12 +157,12 @@
 								<form class="form-inline qbstp-header-subscribe">
 									<div class="col-three-forth">
 										<div class="form-group">
-											<input type="text" class="form-control" readonly id="email" :disabled="allowBingParent" v-model="shareUrl">
+											<input type="text" class="form-control" readonly id="email" :disabled="allowBindParent" v-model="shareUrl">
 										</div>
 									</div>
 									<div class="col-one-third">
 										<div class="form-group">
-											<button type="button" class="btn btn-primary" id="copy" :disabled="allowBingParent" data-clipboard-action="copy" data-clipboard-target="#email" >{{ lang('invite_friends') }}</button>
+											<button type="button" class="btn btn-primary" id="copy" :disabled="allowBindParent" data-clipboard-action="copy" data-clipboard-target="#email" >{{ lang('invite_friends') }}</button>
 										</div>
 									</div>
 								</form>
@@ -495,7 +495,7 @@
 				ethBalance:0,
 				createTime:"", //合约创建时间
 				parentAddress:"",  //推荐人
-				allowBingParent:false,
+				allowBindParent:false,
 				shareUrl:"",
 				userInfo:[],
 				tokenName:"",  //门票名称
@@ -529,12 +529,24 @@
 			},
 			methods:{
 				lang(name){
-					return lang[this.langType][name];
+					var l = window.localStorage.lang?window.localStorage.lang:0;
+					return lang[l][name];
 				},
 				changeLanguageType(e){
 					this.langType = e;
+					window.localStorage.lang = e;
 				},
-				bingParent:function(){
+				bindParent:function(){
+					if(true != web3.isAddress(this.parentAddress)){
+						alertify.error(this.lang("address_error"));
+						return false;
+					}
+
+					if(this.parentAddress.toLowerCase() == this.myAddress.toLowerCase()){
+						alertify.error(this.lang("address_error"));
+						return false;
+					}
+
 					//开始绑定
 					Contract.reg(this.parentAddress,(err,res)=>{
 						if(!err){
@@ -553,6 +565,12 @@
 				},
 				buyToken(){
 					_needEth = _web3.toWei(this.exchangeBalanceEth);
+
+					if(_needEth < 0.01){
+						alertify.error(this.lang("gt_0_01"));
+						return false;
+					}
+
 					if(this.ethBalance < _needEth){
 						alertify.error(this.lang("balance_not_enough"));
 					}else{
@@ -566,15 +584,36 @@
 					}
 				},
 				play(){
+
+					if(true === this.allowBindParent){
+						alertify.error(this.lang('place_bind'));
+						return false;
+					}
+
+					if(this.investmentBalance < 0.01){
+						alertify.error(this.lang("gt_0_01"));
+						return false;
+					}
+
+					if(this.tokenNum < 100){
+						alertify.error(this.lang("ticker_gt_100"));
+						return false;
+					}
+
 					Contract.play({value:web3.toWei(this.investmentBalance)},(err,res)=>{
 						if(!err){
-							console.log(res);
+							alertify.success(this.lang("investment_success"));
 						}else{
 							alertify.error(this.lang("investment_error"));
 						}
 					});
 				},
 				signIn(){
+					if(true === this.allowBindParent){
+						alertify.error(this.lang('place_bind'));
+						return false;
+					}
+
 					Contract.signIn((err,res)=>{
 						if(!err){
 							alertify.success(this.lang("sign_in_success"));
@@ -584,13 +623,23 @@
 					});
 				},
 				withdraw(){
-					Contract.signIn((err,res)=>{
+					if(true === this.allowBindParent){
+						alertify.error(this.lang('place_bind'));
+						return false;
+					}
+
+					if(this.waitWithdraw <= 0.01){
+						alertify.error(this.lang("withdraw_balance_gt_0_01"));
+						return false;
+					}
+
+					Contract.withdraw((err,res)=>{
 						if(!err){
 							alertify.success(this.lang("withdraw_success"));
 						}else{
 							alertify.error(this.lang("withdraw_error"));
 						}
-					})
+					});
 				},
 				hideAddress(str){
 					return str.substring(0,10) + "..." + str.substring(str.length-20)
@@ -679,13 +728,20 @@
 
 		var Contract;
 		var _web3;
-		
+
 		window.ethereum.enable().then((address,err)=>{
+
+
+			var network = web3.version.network;
+			
+			if(1 != network){
+				alertify.error(app.lang('network_error'));
+				return false;
+			}
+
 			_web3 = web3;
 			app.myAddress = address[0];
 			web3.eth.getBalance(app.myAddress,(err,res)=>{
-
-				alertify.log(web3.fromWei(res).toNumber() + " ETH");
 				app.ethBalance = res.toNumber();
 			});
 
@@ -717,10 +773,10 @@
 							parentAddress = "";
 						}
 
-						app.allowBingParent = true;
+						app.allowBindParent = true;
 						app.parentAddress = parentAddress;
 					}else{
-						app.allowBingParent = false;
+						app.allowBindParent = false;
 						app.parentAddress = res[2];
 						app.shareUrl = window.location.protocol+"//"+window.location.host + window.location.pathname + "?address=" + res[1];
 					}

@@ -69,6 +69,7 @@ var lang = [
         "investment_time":"investment time",
         "cash_withdrawal_amount":"to raise cash amount",
         "cash_withdrawal_time":"Cash time",
+        "place_bind":"place bind parent",
     },
     {
         "name":"韩语",
@@ -155,5 +156,17 @@ var lang = [
         "investment_time":"投資時間",
         "cash_withdrawal_amount":"提現金額",
         "cash_withdrawal_time":"提現時間",
+        "place_bind":"请先绑定推荐人",
+
+
+
+
+
+        "address_error":"地址错误",
+        "network_error":"请安装火币钱包或imToken钱包",
+        "gt_0_01":"必须大于0.01",
+        "ticker_gt_100":"门票数量必须大于100",
+        "withdraw_balance_gt_0_01":"提币金额必须大于0.01",
+        "investment_success":"投资成功",
     }
 ];

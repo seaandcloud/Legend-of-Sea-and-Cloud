@@ -28,7 +28,6 @@
 		$(document).click(function (e) {
 	    var container = $("#colorlib-offcanvas, .js-colorlib-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-console.log(222);
 	    	if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
